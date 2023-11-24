@@ -4,53 +4,28 @@ use std::io::Write;
 use crate::function_template::function_template;
 use crate::utils;
 
-pub fn generate_component() {
-    println!("Enter the name of the Component: ");
-
-
+fn get_input(prompt: &str) -> String {
+    println!("{}", prompt);
     let mut user_input = String::new();
-    ///////////////////// Component Name //////////////////////////
+    std::io::stdin().read_line(&mut user_input).expect("Failed to read line");
+    user_input
+}
 
-    std::io::stdin()
-        .read_line(&mut user_input)
-        .expect("Failed to erad line");
+fn get_yes_no_input(prompt: &str) -> bool {
+    let user_input = get_input(prompt);
+    matches!(user_input.to_lowercase().trim(), "y" | "yes")
+}
 
-    let component_name = utils::to_pascal_case(&user_input);
-    let file_name = utils::to_kebab_case(&user_input);
+pub fn generate_component() {
+    let raw_component_name = get_input("Enter the name of the Component: ");
+    let component_name = utils::to_pascal_case(&raw_component_name);
+    let file_name = utils::to_kebab_case(&raw_component_name);
 
-    /////////////////////// Option 1 - props //////////////////////////
 
-    user_input.clear();
-    let mut with_props: bool = false;
+    let with_props = get_yes_no_input("Do you want to use props ? (y/N)");
+    let with_state = get_yes_no_input("Do you want to use React State ? (y/N)");
 
-    println!("Do you want to use props ? (y/N)");
-    std::io::stdin()
-        .read_line(&mut user_input)
-        .expect("Failed to erad line");
-
-    match user_input.to_lowercase().trim() {
-        "y" | "yes" => { with_props = true; }
-        _ => { with_props = false }
-    }
-
-    ///////////////////// Option 2  - state ////////////////////
-
-    user_input.clear();
-    let mut with_state: bool = false;
-
-    println!("Do you want to use React State ? (y/N)");
-    std::io::stdin()
-        .read_line(&mut user_input)
-        .expect("Failed to erad line");
-
-    match user_input.to_lowercase().trim() {
-        "y" | "yes" => { with_state = true; }
-        _ => { with_state = false }
-    }
-
-    //////////////// Generate the File ///////////////////////
-
-    println!("Generating the file for {}...", user_input);
+    println!("Generating the file for {}...", raw_component_name);
 
     let typescript_file = format!("{}.tsx", file_name);
     let mut file = File::create(typescript_file).expect("Failed to create file");
@@ -67,7 +42,7 @@ pub fn generate_component() {
 
     println!(
         "Your component {} has successfully been created!",
-        user_input
+        raw_component_name
     )
 }
 
