@@ -1,6 +1,6 @@
 [package]
 name = "ngrust"
-version = "1.0.1"
+version = "1.0.3"
 edition = "2021"
 description = "A CLI tool inspired by Angular CLI, built with Rust."
 license = "MIT"
