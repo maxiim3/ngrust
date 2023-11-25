@@ -4,7 +4,6 @@ version = "1.0.0"
 edition = "2023"
 description = "A CLI tool inspired by Angular CLI, built with Rust."
 license = "MIT"
-authors= "Maxiim3"
 repository= "https://github.com/maxiim3/ngrust"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
