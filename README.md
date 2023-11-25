@@ -1,38 +1,52 @@
 ![image.png](./asset/image.png)
 
-# NgRust
+# ngrust
 
-An angular-cli ispired tool build with Rust as a learning-project purpose
+An Angular-CLI inspired tool built with Rust as a learning-project purpose
 
-## Installation
+## Crates.io
 
-Use github clone and install the repo locally.
-To test the CLI run
+To use `ngrust` in your project, add the following to your `Cargo.toml` file:
 
-```bash
-cargo run -- # simulates ngrust
+```toml
+[dependencies]
+ngrust = "1.0.1"
 ```
 
+Then, you can use the `ngrust` command in your terminal to generate new components:
+
 ```bash
-cargo run -- --gc # simulates ngrust --gc
+ngrust --gc <COMPONENT_NAME>
 ```
 
-> the `--`flag is used to escape the `cargo` command.
+## GitHub
 
-## Build and install the project
+Clone the repository and install it locally:
 
-Build the project using the `--release` flag
+```bash
+git clone https://github.com/maxiim3/ngrust.git
+cd ngrust
+```
+
+To test the CLI, run:
+
+```bash
+cargo run -- # Simulates ngrust
+cargo run -- --gc # Simulates ngrust --gc
+```
+
+The `--` flag is used to escape the `cargo` command.
+
+## Build and Install the Project
+
+Build the project using the `--release` flag:
 
 ```bash
 cargo build --release
 ```
 
-- This will create the executable binary inside `/target/release/`
-- Then move the Binary with **sudo** permission into you `PATH`
-    - On Mac it would be `/usr/local/bin`
-- Once you've done this, you should be able to use `ngrust` command
+This will create the executable binary inside `/target/release/`. Then, move the binary with **sudo** permission into your `PATH`. On macOS, it would be `/usr/local/bin`. Once you've done this, you should be able to use the `ngrust` command.
 
-* {
 <style>
   *{
 font-family:Inter, sans-serif;
