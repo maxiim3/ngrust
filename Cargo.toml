@@ -4,9 +4,13 @@ version = "1.0.3"
 edition = "2021"
 description = "A CLI tool inspired by Angular CLI, built with Rust."
 license = "MIT"
-repository= "https://github.com/maxiim3/ngrust"
+repository = "https://github.com/maxiim3/ngrust"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 regex = "1.10.2"
 clap = "2.30.0"
+toml = "0.5.8"
+serde_derive = "1.0.124"
+serde = { version = "1.0", features = ["derive"] }
+dialoguer = "0.9"

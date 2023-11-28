@@ -1,10 +1,19 @@
 use regex::Regex;
 
-pub fn to_kebab_case(message: &str) -> String {
+fn capitalize_first_letter(input: &str) -> String {
+    if input.is_empty() {
+        return String::new();
+    }
+
+    let mut chars = input.chars();
+    chars.next().unwrap().to_uppercase().collect::<String>() + chars.as_str()
+}
+
+pub fn file_name(message: &str) -> String {
     message.trim().replace(" ", "-").to_lowercase()
 }
 
-pub fn to_pascal_case(message: &str) -> String {
+pub fn component_name(message: &str) -> String {
     let rx = Regex::new(r"[ \-_]+").unwrap();
 
     let split = rx.replace(message.trim(), ",");
@@ -16,13 +25,4 @@ pub fn to_pascal_case(message: &str) -> String {
         .collect();
 
     capitalized_list.join("")
-}
-
-fn capitalize_first_letter(input: &str) -> String {
-    if input.is_empty() {
-        return String::new();
-    }
-
-    let mut chars = input.chars();
-    chars.next().unwrap().to_uppercase().collect::<String>() + chars.as_str()
 }

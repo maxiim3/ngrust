@@ -2,9 +2,12 @@ extern crate clap;
 
 use clap::{App, Arg};
 
-mod utils;
 mod function_template;
-mod packages;
+mod feature;
+mod format;
+mod client_request;
+mod file_controller;
+mod configuration_file;
 
 fn main() {
     let matches = App::new("ngrust")
@@ -14,13 +17,20 @@ fn main() {
         .arg(
             Arg::with_name("gc")
                 .long("gc")
-                .help("Generates a new component"),
-        )
+                .help("Generates a new component")
+        ).arg(
+        Arg::with_name("init")
+            .long("init")
+            .help("Initialize configuration")
+    )
         .get_matches();
 
+    feature::display_welcome_message();
+
     if matches.is_present("gc") {
-        packages::generate_component()
-    } else {
-        packages::display_welcome_message()
+        configuration_file::handle_configuration_file();
+        feature::generate_component()
+    } else if matches.is_present("init") {
+        configuration_file::handle_configuration_file()
     }
 }
