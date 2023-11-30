@@ -1,4 +1,5 @@
 use dialoguer::{MultiSelect, theme::ColorfulTheme};
+use crate::feature;
 
 pub fn ask_client(prompt: &str) -> String {
     println!("{}", prompt);
@@ -12,18 +13,19 @@ pub fn is_affirmative(prompt: &str) -> bool {
     matches!(user_input.to_lowercase().trim(), "y" | "yes")
 }
 
-pub fn multi_selection<'a>(prompt: &str, options: Vec<&'a str>) -> Vec<&'a str> {
-    println!("{}", prompt);
 
-    let selection_index = MultiSelect::with_theme(&ColorfulTheme::default())
-        .items(&options)
-        .interact()
-        .unwrap();
-
-    let mut selection: Vec<&'a str> = Vec::new();
-    for index in selection_index.iter() {
-        selection.push(options[*index])
-    };
-
-    return selection;
-}
+// pub fn multi_selection<'a>(prompt: &str, options: Vec<&'a str>) -> Vec<&'a str> {
+//     println!("{}", prompt);
+//
+//     let selection_index = MultiSelect::with_theme(&ColorfulTheme::default())
+//         .items(&options)
+//         .interact()
+//         .unwrap();
+//
+//     let mut selection: Vec<&'a str> = Vec::new();
+//     for index in selection_index.iter() {
+//         selection.push(options[*index])
+//     };
+//
+//     return selection;
+// }
