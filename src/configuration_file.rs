@@ -7,16 +7,16 @@ use toml;
 
 use crate::file_controller;
 
+const CONFIG_PATH: &str = "./ngrust_config.toml";
+const CONFIG_TEMPLATE: &str = "path = \"./ui/\"
+welcome_message = \"Usage: ngrust --gc <COMPONENT_NAME> to generate a new component\"
+";
+
 #[derive(Deserialize)]
 pub struct PathConfig {
     path: Option<String>,
     welcome_message: Option<String>,
 }
-
-const CONFIG_PATH: &str = "./ngrust_config.toml";
-const CONFIG_TEMPLATE: &str = "path = \"./ui/\"
-welcome_message = \"Usage: ngrust --gc <COMPONENT_NAME> to generate a new component\"
-";
 
 pub fn read_config_file_content() -> PathConfig {
     let content = fs::read_to_string(CONFIG_PATH).unwrap();

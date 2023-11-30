@@ -2,12 +2,19 @@ extern crate clap;
 
 use clap::{App, Arg};
 
+use welcome_message::display_welcome_message;
+
+use crate::configuration_file::handle_configuration_file;
+use crate::main_program::{Program, ProgramController};
+
 mod function_template;
-mod feature;
+mod main_program;
 mod format;
-mod client_request;
 mod file_controller;
 mod configuration_file;
+mod feature_multi_selection;
+mod component;
+mod welcome_message;
 
 fn main() {
     let matches = App::new("ngrust")
@@ -25,12 +32,13 @@ fn main() {
     )
         .get_matches();
 
-    feature::display_welcome_message();
+    display_welcome_message();
 
     if matches.is_present("gc") {
-        configuration_file::handle_configuration_file();
-        feature::generate_component()
+        handle_configuration_file();
+        let mut program = Program::new();
+        program.run();
     } else if matches.is_present("init") {
-        configuration_file::handle_configuration_file()
+        handle_configuration_file()
     }
 }
