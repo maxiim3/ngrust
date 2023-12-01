@@ -1,0 +1,2 @@
+path = "./ui/"
+welcome_message = "Usage: ngrust --gc <COMPONENT_NAME> to generate a new component"
