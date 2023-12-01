@@ -7,7 +7,7 @@ use toml;
 
 use crate::file_controller;
 
-const CONFIG_PATH: &str = "./ngrust_config.toml";
+const FILE_PATH: &str = "./ngrust_config.toml";
 const CONFIG_TEMPLATE: &str = "path = \"./ui/\"
 welcome_message = \"Usage: ngrust --gc <COMPONENT_NAME> to generate a new component\"
 ";
@@ -19,7 +19,7 @@ pub struct PathConfig {
 }
 
 pub fn read_config_file_content() -> PathConfig {
-    let content = fs::read_to_string(CONFIG_PATH).unwrap();
+    let content = fs::read_to_string(FILE_PATH).unwrap();
     let config: PathConfig = toml::from_str(&content).unwrap();
     return config;
 }
@@ -28,7 +28,7 @@ pub fn get_welcome_message() -> String {
     let config: PathConfig = read_config_file_content();
     match config.welcome_message {
         Some(message) => String::from(message),
-        None => String::from("Welcome")
+        None => String::from("Welcome"),
     }
 }
 
@@ -49,11 +49,11 @@ pub fn get_path() -> String {
             }
             return path.display().to_string();
         }
-        None => { String::from("./") }
+        None => String::from("./"),
     }
 }
 
-pub fn file_exists(file_path: &str) -> bool {
+pub fn check_file_existence(file_path: &str) -> bool {
     let path = Path::new(file_path);
     if let Ok(metadata) = fs::metadata(path) {
         metadata.is_file()
@@ -63,13 +63,25 @@ pub fn file_exists(file_path: &str) -> bool {
 }
 
 pub(crate) fn handle_configuration_file() {
-    let is_file = file_exists(CONFIG_PATH);
-    if !is_file {
-        println!("Initializing configuration...");
-        let mut new_file = File::create(CONFIG_PATH).expect("Failed to create the configuration file");
-        file_controller::write_file(&mut new_file, CONFIG_TEMPLATE.to_string());
-        println!("Configuration file created with success")
+    let configuration_file_exits = check_file_existence(FILE_PATH);
+    if !configuration_file_exits {
+        user_feedback("Initializing configuration...");
+        create_configuration_file();
+        user_feedback("Configuration file created with success")
     } else {
-        println!("Configuration file found")
+        user_feedback("Configuration file found")
     }
+}
+
+pub fn create_configuration_file() {
+    let mut new_file = File::create(FILE_PATH)
+        .expect("Failed to create the configuration file");
+    file_controller::write_file(
+        &mut new_file,
+        CONFIG_TEMPLATE.to_string(),
+    );
+}
+
+pub fn user_feedback(message: &str) {
+    println!("{}", message);
 }

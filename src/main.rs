@@ -7,7 +7,6 @@ use welcome_message::display_welcome_message;
 use crate::configuration_file::handle_configuration_file;
 use crate::main_program::{Program, ProgramController};
 
-mod function_template;
 mod main_program;
 mod format;
 mod file_controller;
@@ -32,13 +31,13 @@ fn main() {
     )
         .get_matches();
 
-    display_welcome_message();
 
     if matches.is_present("gc") {
         handle_configuration_file();
+    display_welcome_message();
         let mut program = Program::new();
         program.run();
     } else if matches.is_present("init") {
-        handle_configuration_file()
+        handle_configuration_file();
     }
 }
